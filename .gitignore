@@ -108,3 +108,18 @@ coverage/
 *.whl
 *.manifest
 *.spec
+
+# Archivos de caché de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Entorno virtual
+venv/
+
+# Base de datos local
+db.sqlite3
+
+# Variables de entorno
+.env
