@@ -1,3 +1,6 @@
+import qrcode
+from io import BytesIO
+from django.core.files.base import ContentFile
 from django.db import models
 
 class Propietario(models.Model):
@@ -22,3 +25,14 @@ class Vehiculo(models.Model):
 
     def __str__(self):
         return f"{self.placa} - {self.marca}"
+    
+    qr_code = models.ImageField(upload_to='qrs/', blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.qr_code:
+            # Creamos el QR con la placa como identificador único
+            qr = qrcode.make(self.placa)
+            buffer = BytesIO()
+            qr.save(buffer, format="PNG")
+            self.qr_code.save(f"{self.placa}.png", ContentFile(buffer.getvalue()), save=False)
+        super().save(*args, **kwargs)

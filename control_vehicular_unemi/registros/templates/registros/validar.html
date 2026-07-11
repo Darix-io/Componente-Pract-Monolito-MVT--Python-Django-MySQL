@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Control de Acceso</h1>
+    {% if resultado %}<p><strong>{{ resultado }}</strong></p>{% endif %}
+    
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="placa" placeholder="Ingrese placa" required>
+        <select name="tipo">
+            <option value="Entrada">Entrada</option>
+            <option value="Salida">Salida</option>
+        </select>
+        <button type="submit">Validar y Registrar</button>
+    </form>
+    <a href="/accesos/vehiculos/">Ver lista de vehículos</a>
+</body>
+</html>

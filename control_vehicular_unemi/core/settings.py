@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'usuarios',
     'accesos',
+    'registros',
 ]
 
 MIDDLEWARE = [
@@ -126,6 +127,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Configuración para archivos subidos por el usuario (media)
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Ajustamos la ruta para que busque 'static' en la raíz de tu proyecto
 STATICFILES_DIRS = [BASE_DIR / 'static']
