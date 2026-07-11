@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Vehículos</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Vehículos Autorizados</h1>
+        {% for vehiculo in vehiculos %}
+            <div class="vehiculo-card">
+                <strong>Placa:</strong> {{ vehiculo.placa }} <br>
+                <strong>Marca:</strong> {{ vehiculo.marca }} - {{ vehiculo.modelo }} <br>
+                <strong>Propietario:</strong> {{ vehiculo.id_propietario.nombre }}
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
