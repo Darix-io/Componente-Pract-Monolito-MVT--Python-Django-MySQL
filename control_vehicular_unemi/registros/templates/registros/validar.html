@@ -1,18 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Punto de Control - Escáner</title>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #343a40; color: white; text-align: center; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; color: #333; }
+        #reader { width: 100%; margin-bottom: 20px; }
+        input, select, button { padding: 10px; margin: 5px; font-size: 16px; width: 90%; max-width: 300px; }
+        .btn { background-color: #28a745; color: white; border: none; cursor: pointer; font-weight: bold; border-radius: 5px; }
+        .btn:hover { background-color: #218838; }
+        .alerta { padding: 15px; border-radius: 5px; margin-bottom: 20px; font-weight: bold; }
+        .alerta-exito { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .alerta-error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    </style>
+</head>
 <body>
-    <h1>Control de Acceso</h1>
-    {% if resultado %}<p><strong>{{ resultado }}</strong></p>{% endif %}
-    
-    <form method="POST">
-        {% csrf_token %}
-        <input type="text" name="placa" placeholder="Ingrese placa" required>
-        <select name="tipo">
-            <option value="Entrada">Entrada</option>
-            <option value="Salida">Salida</option>
-        </select>
-        <button type="submit">Validar y Registrar</button>
-    </form>
-    <a href="/accesos/vehiculos/">Ver lista de vehículos</a>
+
+    <div class="container">
+        <h2>Punto de Control Vehicular</h2>
+        
+        {% if resultado %}
+            <div class="alerta {% if 'exitosamente' in resultado %}alerta-exito{% else %}alerta-error{% endif %}">
+                {{ resultado }}
+            </div>
+        {% endif %}
+
+        <div id="reader"></div>
+
+        <form method="POST" id="form-acceso">
+            {% csrf_token %}
+            <p>Escanea un QR o ingresa la placa manualmente:</p>
+            <input type="text" name="placa" id="placa-input" placeholder="Ej: ABC-1234" required>
+            <br>
+            <select name="tipo">
+                <option value="Entrada">Registrar Entrada</option>
+                <option value="Salida">Registrar Salida</option>
+            </select>
+            <br>
+            <button type="submit" class="btn">Validar Acceso</button>
+        </form>
+        <br>
+        <a href="{% url 'dashboard_guardia' %}" style="color: #0056b3;">Volver al Dashboard</a>
+    </div>
+
+    <script>
+        // Configuración del escáner
+        function onScanSuccess(decodedText, decodedResult) {
+            // Cuando detecta un QR, pone el texto (la placa) en el input
+            document.getElementById('placa-input').value = decodedText;
+            
+            // Opcional: Podríamos hacer que el formulario se envíe automáticamente aquí
+            // document.getElementById('form-acceso').submit();
+        }
+
+        var html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess);
+    </script>
+
 </body>
 </html>
