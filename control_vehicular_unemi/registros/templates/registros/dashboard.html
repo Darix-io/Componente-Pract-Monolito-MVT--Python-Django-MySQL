@@ -13,7 +13,7 @@
         th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #ddd; }
         th { background-color: #0056b3; color: white; }
         tr:hover { background-color: #f1f1f1; }
-        .btn { display: inline-block; background: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .btn { display: inline-block; background: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; border: none; cursor: pointer; font-size: 16px;}
         .btn:hover { background: #218838; }
     </style>
 </head>
@@ -21,7 +21,16 @@
 
     <div class="header">
         <h1>Control de Acceso Vehicular - UNEMI</h1>
-        <a href="{% url 'validar_acceso' %}" class="btn">Abrir Punto de Control</a>
+        <div>
+            <a href="{% url 'exportar_reporte' %}" class="btn" style="background-color: #007bff; margin-right: 10px;">Descargar Historial</a>
+            
+            <a href="{% url 'validar_acceso' %}" class="btn">Abrir Punto de Control</a>
+            
+            <form action="{% url 'logout' %}" method="post" style="display: inline; margin-left: 10px;">
+                {% csrf_token %}
+                <button type="submit" class="btn" style="background-color: #dc3545;">Cerrar Sesión</button>
+            </form>
+        </div>
     </div>
 
     <div class="card">
