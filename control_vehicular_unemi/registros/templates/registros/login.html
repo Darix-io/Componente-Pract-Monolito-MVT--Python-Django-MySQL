@@ -3,104 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acceso de Seguridad - UNEMI</title>
+    <title>Iniciar Sesión - Control de Acceso</title>
     <style>
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: #f0f2f5; 
-            height: 100vh; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            margin: 0; 
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { display: flex; height: 100vh; background-color: #f8f9fa; }
+        
+        /* Panel Izquierdo Oscuro */
+        .left-panel {
+            flex: 1;
+            background-color: #1e1b4b; /* Color azul muy oscuro del mockup */
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
         }
-        .login-container { 
-            background: white; 
-            padding: 40px; 
-            border-radius: 10px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-            width: 100%; 
-            max-width: 400px; 
-            text-align: center; 
+        .left-panel svg { width: 120px; height: 120px; margin-bottom: 20px; }
+        .left-panel h1 { font-size: 32px; font-weight: 700; margin-bottom: 10px; }
+        .left-panel p { font-size: 16px; color: #a5b4fc; text-align: center; }
+        .illustration { margin-top: 50px; max-width: 80%; }
+
+        /* Panel Derecho (Formulario) */
+        .right-panel {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
         }
-        .login-container h2 { 
-            color: #1a365d; 
-            margin-bottom: 10px; 
-        }
-        .login-container p {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 14px;
-        }
-        .form-group { 
-            margin-bottom: 20px; 
-            text-align: left; 
-        }
-        .form-group label { 
-            display: block; 
-            margin-bottom: 8px; 
-            color: #333; 
-            font-weight: bold; 
-        }
-        .form-group input { 
-            width: 100%; 
-            padding: 12px; 
-            border: 1px solid #ccc; 
-            border-radius: 5px; 
-            box-sizing: border-box; 
-            font-size: 16px; 
-        }
-        .btn-login { 
-            background-color: #fdb913; /* Amarillo UNEMI */
-            color: #1a365d; /* Azul UNEMI */
-            border: none; 
-            padding: 15px; 
-            width: 100%; 
-            border-radius: 5px; 
-            font-size: 16px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            transition: background-color 0.3s; 
-        }
-        .btn-login:hover { 
-            background-color: #e5a710; 
-        }
-        .error-message { 
-            color: #dc3545; 
-            background-color: #f8d7da; 
-            padding: 10px; 
-            border-radius: 5px; 
-            margin-bottom: 20px; 
-            font-size: 14px;
+        .login-container { width: 100%; max-width: 400px; padding: 20px; }
+        .login-container h2 { font-size: 28px; color: #111827; margin-bottom: 10px; text-align: center; }
+        .login-container p.subtitle { color: #6b7280; text-align: center; margin-bottom: 30px; font-size: 14px; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: flex; align-items: center; font-size: 14px; color: #374151; margin-bottom: 8px; font-weight: 600; }
+        .form-group label svg { width: 18px; height: 18px; margin-right: 8px; color: #6b7280; }
+        .form-group input { width: 100%; padding: 12px 15px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 15px; outline: none; transition: border-color 0.3s; }
+        .form-group input:focus { border-color: #4f46e5; box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
+        
+        .options { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; font-size: 13px; color: #4f46e5; }
+        .options label { color: #6b7280; display: flex; align-items: center; cursor: pointer; font-weight: normal; margin: 0; }
+        .options input[type="checkbox"] { margin-right: 8px; }
+        .options a { color: #4f46e5; text-decoration: none; font-weight: 600; }
+        
+        .btn-login { background-color: #4f46e5; color: white; border: none; padding: 14px; width: 100%; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: background-color 0.3s; margin-bottom: 20px; }
+        .btn-login:hover { background-color: #4338ca; }
+        
+        .divider { display: flex; align-items: center; text-align: center; color: #9ca3af; font-size: 13px; margin-bottom: 20px; }
+        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #e5e7eb; }
+        .divider:not(:empty)::before { margin-right: .25em; }
+        .divider:not(:empty)::after { margin-left: .25em; }
+
+        .btn-bio { background-color: white; color: #374151; border: 1px solid #d1d5db; padding: 12px; width: 100%; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: background-color 0.3s; }
+        .btn-bio:hover { background-color: #f9fafb; }
+        .btn-bio svg { width: 20px; height: 20px; margin-right: 10px; color: #4f46e5; }
+
+        .error-message { background-color: #fee2e2; color: #b91c1c; padding: 12px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; text-align: center; border: 1px solid #f87171; }
+
+        /* Responsividad para pantallas pequeñas */
+        @media (max-width: 768px) {
+            .left-panel { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <div class="login-container">
-        <h2>Control Vehicular</h2>
-        <p>Módulo de Seguridad - UNEMI</p>
+    <div class="left-panel">
+        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+        <h1>Control de Acceso</h1>
+        <p>Módulo de Control de Acceso</p>
+    </div>
 
-        {% if form.errors %}
-            <div class="error-message">
-                Usuario o contraseña incorrectos. Por favor, intente de nuevo.
-            </div>
-        {% endif %}
+    <div class="right-panel">
+        <div class="login-container">
+            <h2>Iniciar sesión</h2>
+            <p class="subtitle">Ingresa tus credenciales para continuar</p>
 
-        <form method="POST" action="{% url 'login' %}">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="id_username">Usuario:</label>
-                <input type="text" name="username" id="id_username" required autofocus>
-            </div>
-            <div class="form-group">
-                <label for="id_password">Contraseña:</label>
-                <input type="password" name="password" id="id_password" required>
-            </div>
-            <button type="submit" class="btn-login">Iniciar Sesión</button>
-            
-            <input type="hidden" name="next" value="{% url 'dashboard_guardia' %}">
-        </form>
+            {% if form.errors %}
+                <div class="error-message">
+                    Usuario o contraseña incorrectos. Por favor, verifica tus datos.
+                </div>
+            {% endif %}
+
+            <form method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_username">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        Usuario
+                    </label>
+                    <input type="text" name="username" id="id_username" placeholder="Ingresa tu usuario" required autofocus>
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_password">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        Contraseña
+                    </label>
+                    <input type="password" name="password" id="id_password" placeholder="Ingresa tu contraseña" required>
+                </div>
+
+                <div class="options">
+                    <label><input type="checkbox"> Recordar usuario</label>
+                    <a href="#">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <button type="submit" class="btn-login">INICIAR SESIÓN</button>
+                
+                <div class="divider">O</div>
+                
+                <button type="button" class="btn-bio">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"></path></svg>
+                    Iniciar sesión con biometría
+                </button>
+                
+                <input type="hidden" name="next" value="{% url 'dashboard_guardia' %}">
+            </form>
+        </div>
     </div>
 
 </body>
